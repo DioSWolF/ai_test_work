@@ -1,5 +1,5 @@
 import asyncio
-from chatgpt_connevtor import ChatGPT
+from chatgpt_connector import ChatGPT
 from file_readers import EnvReader, JsonIO
 from json_parse import ChatGPTCfg, ChatGPTPrompts, CodeReviewResponse, PythonCode
 from messages_editor import MessageEditor
