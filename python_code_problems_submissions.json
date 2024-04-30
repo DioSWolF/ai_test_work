@@ -1,0 +1,209 @@
+{
+    "python": {
+        "code_problems": [
+            {
+                "topic_id": 399,
+                "topic_title": "Program with numbers",
+                "topic_theory_url": "https://hyperskill.org/learn/step/5872",
+                "step_id": 6464,
+                "step_title": "Divide nuts equally between squirrels",
+                "step_description": "<p></p><p>N squirrels found K nuts and decided to divide them equally. Determine how many nuts each squirrel will get and print the result. The answer should be an integer.</p><p><strong>Tip: </strong>Mind the order of the variables!</p><p><strong>Input data format</strong></p><p>There are two positive numbers N and K, each of them is not greater than 10000.</p>",
+                "step_url": "https://hyperskill.org/learn/step/6464",
+                "code_template": "# put your python code here",
+                "test_cases": [
+                    {
+                        "input": "3\n14",
+                        "output": "4"
+                    }
+                ],
+                "wrong_code_submission": "# put your python code here\nN=int(input(\"Enter value of n\"))\nK=int(input(\"Enter value of k\"))\nans=K//N\nprint(ans)\n",
+                "default_feedback": "Failed test #1 of 6. Wrong answer\n\nThis is a sample test from the problem statement!\n\nTest input:\n3\n14\nCorrect output:\n4\n\nYour code output:\nEnter value of nEnter value of k4\n",
+                "gpt_current_feedback": "1. Ensure to separate inputs clearly by adding space after \"Enter value of n\".\n2. Check the order of operands in the division operation to correctly distribute nuts among the squirrels.",
+                "correct_code_submission": "N = int(input())\nK = int(input())\nprint(K // N)\n"
+            },
+            {
+                "topic_id": 534,
+                "topic_title": "Function, arguments and parameters",
+                "topic_theory_url": "https://hyperskill.org/learn/step/7248",
+                "step_id": 10302,
+                "step_title": "Equation",
+                "step_description": "<p></p>\n<p>Write a function <code class=\"java\">equation_writing()</code> that will <strong>print</strong> the equation in the following format: <code class=\"java\">a x + b = c</code>. The function must take three arguments: <code class=\"java\">a</code>, <code class=\"java\">b</code>, <code class=\"java\">c</code>, these values are subject to change. The rest of the equation remains unchanged.</p>\n<p>You are <em>NOT</em> supposed to handle input or call a function, just implement it.</p>",
+                "step_url": "https://hyperskill.org/learn/step/10302",
+                "code_template": "def equation_writing(...):\n    ...",
+                "test_cases": [
+                    {
+                        "input": "3 4 3",
+                        "output": "3 x + 4 = 3"
+                    }
+                ],
+                "wrong_code_submission": "def equation_writing(a, b, c):\n    print(a, 'x +', b, '=', c)\n\n# Sample Input 1:\nequation_writing(3, 4, 3)\n\n\n\n\n\n",
+                "default_feedback": "Failed test #1 of 3. Wrong answer\n\nThis is a sample test from the problem statement!\n\nTest input:\n3 4 3\nCorrect output:\n3 x + 4 = 3\n\nYour code output:\n3 x + 4 = 3\n3 x + 4 = 3\n",
+                "gpt_current_feedback": "1. Change the existing print statement to use string formatting to match the desired output format with 'x' as a placeholder.\n2. Ensure to properly format the variables 'a', 'b', and 'c' in the string format.",
+                "correct_code_submission": "def equation_writing(a, b, c):\n    print(f\"{a} x + {b} = {c}\")\n"
+            },
+            {
+                "topic_id": 407,
+                "topic_title": "Else statement",
+                "topic_theory_url": "https://hyperskill.org/learn/step/5932",
+                "step_id": 6554,
+                "step_title": "Healthy sleep",
+                "step_description": "<p></p><p>Ann learned from a health TV program that it's ideal to sleep a minimum of <code class=\"java\">A</code> hours daily but not to exceed <code class=\"java\">B</code> hours. Ann currently sleeps for <code class=\"java\">H</code> hours each day and wants to know, whether her sleep schedule is healthy. Your program should receive 3 numbers in the following order: <code class=\"java\">A</code>, <code class=\"java\">B</code>, <code class=\"java\">H,</code> where <code class=\"java\">A</code> is always less than or equal to <code class=\"java\">B</code>. If Ann follows the program's recommendations, print \"<strong>Normal</strong>\". If she sleeps <strong>less</strong> than A hours, output \"<strong>Deficiency</strong>\", and if she sleeps <strong>more</strong> than B hours, output \"<strong>Excess</strong>\". Ensure the output exactly matches the specified cases (\"Deficiency,\" \"Excess,\" \"Normal\"). Pay attention to strict conditional operators: <span class=\"math-tex\">\\( \\lt \\)</span> and <span class=\"math-tex\">\\( \\le \\)</span>, <span class=\"math-tex\">\\( \\gt \\)</span> and <span class=\"math-tex\">\\( \\ge \\)</span>. Think <strong>carefully</strong> about all the conditions which you need to use.</p>",
+                "step_url": "https://hyperskill.org/learn/step/6554",
+                "code_template": "",
+                "test_cases": [
+                    {
+                        "input": "6\n10\n8",
+                        "output": "Normal"
+                    }
+                ],
+                "wrong_code_submission": "a = input()\nb = input()\nh = input()\nif h >= a and h <= b:\n    print(\"Normal\")\nelse:\n    if h < a:\n        print(\"Deficiency\")\n    else:\n        print(\"Excess\")\n",
+                "default_feedback": "",
+                "gpt_current_feedback": "1. Change the input statements to convert the input to integers.\n2. Validate that the input is correctly converted to integers.\n3. Ensure the condition for checking normal sleep is considering all cases correctly.\n4. Check if the condition for sleep deficiency is correct based on the problem description.\n5. Verify the condition for sleep excess according to the given problem requirements.\n6. Make sure all the conditions are exclusive and cover all possible cases mentioned in the problem.",
+                "correct_code_submission": "A, B, H = int(input()), int(input()), int(input())\n\nif H < A:\n    print(\"Deficiency\")\nelif H > B:\n    print(\"Excess\")\nelse:\n    print(\"Normal\")\n"
+            },
+            {
+                "topic_id": 453,
+                "topic_title": "Loop control: break, continue, pass",
+                "topic_theory_url": "https://hyperskill.org/learn/step/6302",
+                "step_id": 6609,
+                "step_title": "Game over",
+                "step_description": "<p></p><p>In online test games, there is usually a limited number of lives: if, for example, you make 3 mistakes, you lose, and cannot continue with the game. Let's try to implement this system.</p><p><br/>Read the line with user answers from the input<strong>: C </strong>for a correct answer and <strong>I </strong>for an incorrect one, separated by space. The objective is to count the final score, which is the number of correct answers. Count them until the user reaches <strong>3 incorrect answers</strong>. If they make no more than 2 mistakes, they win. In this case print <strong>\"You won\" </strong>and their score, otherwise print \"<strong>Game over\" </strong>along with their score. Display the message and score on separate lines, without quotation marks.</p><p><strong>The input format:</strong></p><p>A line with <strong>N</strong> user answers in a game separated by space</p><p><strong>The output format:</strong></p><p><strong>Game over </strong>or <strong>You won</strong><br/>Final score</p><p></p>",
+                "step_url": "https://hyperskill.org/learn/step/6609",
+                "code_template": "scores = input().split()\n# put your python code here",
+                "test_cases": [
+                    {
+                        "input": "C C C I C C C C I I C C C C C C C C C",
+                        "output": "Game over\n7"
+                    }
+                ],
+                "wrong_code_submission": "scores = input().split()\n\n# put your python code here\nscore_sum = 0\nmistake_sum = 0\nfor score in scores:\n    if score = 'C':\n        score_sum+=1\n        continue\n    else:\n        mistake_sum+=1\n        if mistake_sum>=3:\n            break\n        else:\n            continue\n\nif mistake_sum>=3:\n    print(\"Game over\")\nelse:\n    print(\"You won\")\n\nprint(score_sum)\n        \n    \n",
+                "default_feedback": "Failed test #1 of 17. Runtime error\n\nThis is a sample test from the problem statement!\n\nTest input:\nC C C I C C C C I I C C C C C C C C C\nCorrect output:\nGame over\n7\n\nYour code output:\n\n\nError:\n  File \"/sandbox/main.py\", line 7\n    if score = 'C':\n       ^^^^^^^^^^^\nSyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?\n",
+                "gpt_current_feedback": "1. Change the comparison operator in the if statement where you check for 'C' from '=' to '=='.\n2. Ensure the `if` statement syntax is corrected to compare correctly for equality.\n3. Address the use of assignment '=' instead of comparison '==' in the if statement for checking the score as 'C'.",
+                "correct_code_submission": "scores = input().split()\n# put your python code here\nlives = 3\nfinal_score = 0\n\nfor i in scores:\n    lives -= i == \"I\"\n    final_score += i == \"C\"\n    if lives <= 0:\n        print(\"Game over\")\n        break\nelse:\n    print(\"You won\")\nprint(final_score)\n"
+            },
+            {
+                "topic_id": 501,
+                "topic_title": "Working with strings: basic methods",
+                "topic_theory_url": "https://hyperskill.org/learn/step/6842",
+                "step_id": 6850,
+                "step_title": "Poster artist",
+                "step_description": "<p>Imagine that you design film posters for a living. Write a program that prints each film title in all caps.</p>",
+                "step_url": "https://hyperskill.org/learn/step/6850",
+                "code_template": "",
+                "test_cases": [
+                    {
+                        "input": "the lion king",
+                        "output": "THE LION KING"
+                    }
+                ],
+                "wrong_code_submission": "print(word.upper())\n\n\n\n",
+                "default_feedback": "Failed test #1 of 7. Runtime error\n\nThis is a sample test from the problem statement!\n\nTest input:\nthe lion king\nCorrect output:\nTHE LION KING\n\nYour code output:\n\n\nError:\nTraceback (most recent call last):\n  File \"/sandbox/main.py\", line 1, in <module>\n    print(word.upper())\n          ^^^^\nNameError: name 'word' is not defined. Did you mean: 'ord'?\n",
+                "gpt_current_feedback": "1. Define a variable and assign it the input provided.\n2. Use the variable with the film title to apply the `upper()` method for converting to uppercase.\n3. Ensure the variable defined in step 1 is used inside the `print()` function for the correct output.",
+                "correct_code_submission": "film_title = str(input())\n\nprint(film_title.upper())\n"
+            },
+            {
+                "topic_id": 1046,
+                "topic_title": "Operations with dictionary",
+                "topic_theory_url": "https://hyperskill.org/learn/step/11096",
+                "step_id": 6487,
+                "step_title": "Frequency Dictionary",
+                "step_description": "<p>When Anton finished reading \"War and Peace\", he decided to find out the number of specific words used in the book.</p>\n<p>Help Anton write a simplified version of such a program, that will be capable of counting the words separated with space, and print the statistics.</p>\n<p>The program should ask a user for a sentence and print out each unique word with the number of its usages in the line in the following format (case insensitive!): <em>word amount</em>, e.g. <code class=\"java\">sun 3</code>. The word order does not matter, each word must be printed only once.</p>",
+                "step_url": "https://hyperskill.org/learn/step/6487",
+                "code_template": "# put your python code here",
+                "test_cases": [
+                    {
+                        "input": "a aa abC aa ac abc bcd a",
+                        "output": "a 2\naa 2\nabc 2\nac 1\nbcd 1"
+                    }
+                ],
+                "wrong_code_submission": "sentence = str(input())\nlower_sentence = sentence.lower()\nword = lower_sentence.split()\n\nword_count = {}\n\nfor item in word:\n    if item in word_count:\n        word_count[item] += 1\n    else:\n        word_count[item] = 1\n\nfor key, value in word_count.items():\n    print(f\"{key} : {value}\")\n",
+                "default_feedback": "Failed test #1 of 21. Wrong answer\n\nThis is a sample test from the problem statement!\n\nTest input:\na aa abC aa ac abc bcd a\nCorrect output:\na 2\naa 2\nabc 2\nac 1\nbcd 1\n\nYour code output:\na : 2\naa : 2\nabc : 2\nac : 1\nbcd : 1\n",
+                "gpt_current_feedback": "1. Modify the print statement format to match the expected format: \"word amount\" without a colon and without spaces around the colon.\n2. Ensure the correct number of occurrences is displayed after each word.\n3. Make sure the case of the word being counted is not changed to lowercase before processing.\n4. Adjust the splitting of the input sentence to consider consecutive spaces as separators to avoid empty strings in the word list.",
+                "correct_code_submission": "# put your python code here\nsentence = input().lower()\nwords = sentence.split()\nfrequency = {word: words.count(word) for word in set(words)}\nfor word, count in frequency.items():\n    print(word, count)\n"
+            },
+            {
+                "topic_id": 534,
+                "topic_title": "Function, arguments and parameters",
+                "topic_theory_url": "https://hyperskill.org/learn/step/7248",
+                "step_id": 10301,
+                "step_title": "Double greeting",
+                "step_description": "<p></p>\n<p>We wrote a function that greets two people:</p>\n<pre><code class=\"language-python\">def greeting(first_name, second_name):\n    print(\"Hello,\", first_name, \"and\", second_name)</code></pre>\n<p>The first name is already stored in the variable <code class=\"language-python\">first_name</code>, and the second is stored in the variable <code class=\"language-python\">second_name</code>. Your task is to <strong>call</strong> this function <strong>twice</strong> in the code section. The first time it should print <code class=\"language-python\">Hello, first_name and second_name</code>, and the second time <code class=\"language-python\">Hello, second_name and first_name</code>.</p>",
+                "step_url": "https://hyperskill.org/learn/step/10301",
+                "code_template": "# the following lines read names from the input, do not modify it, please\nname_1 = input()\nname_2 = input()\n\n# your code here",
+                "test_cases": [
+                    {
+                        "input": "Sid\nNancy",
+                        "output": "Hello, Sid and Nancy\nHello, Nancy and Sid"
+                    }
+                ],
+                "wrong_code_submission": "# the following lines read names from the input, do not modify it, please\nname_1 = input()\nname_2 = input()\ngreetings(name_1,name_2)\n# your code here",
+                "default_feedback": "Failed test #1 of 2. Runtime error\n\nThis is a sample test from the problem statement!\n\nTest input:\nSid\nNancy\nCorrect output:\nHello, Sid and Nancy\nHello, Nancy and Sid\n\nYour code output:\n\n\nError:\nTraceback (most recent call last):\n  File \"/sandbox/main.py\", line 6, in <module>\n    greetings(name_1,name_2)\n    ^^^^^^^^^\nNameError: name 'greetings' is not defined. Did you mean: 'greeting'?\n",
+                "gpt_current_feedback": "1. Define the function name correctly for calling, it should be \"greeting\" instead of \"greetings\".\n2. Ensure to call the \"greeting\" function with the correct parameters inside the code section.\n3. Make sure to follow the order of parameters as instructed in the problem description.",
+                "correct_code_submission": "# the following lines read names from the input, do not modify it, please\nname_1 = input()\nname_2 = input()\n\ngreeting(name_1, name_2)\ngreeting(name_2, name_1)\n"
+            },
+            {
+                "topic_id": 440,
+                "topic_title": "Type casting",
+                "topic_theory_url": "https://hyperskill.org/learn/step/6224",
+                "step_id": 8213,
+                "step_title": "Lexical reduplication",
+                "step_description": "<p></p>\n<p>The languages of the world are amazing! Programming languages too, but now we will talk about the human ones. In linguistics, repeating a word or part of it is called <em>reduplication</em>. This morphological phenomenon is found in different languages. Think for a second, and you will definitely come up with a couple of examples. Just to name a few: <em>knock-knock, so-so, bye-bye</em>.</p>\n<p>We have a full reduplication here since the entire word is repeated. That's the mechanism we want you to implement. Print a word exactly 2 times. The spelling rules vary across the globe, so do not separate the halves (that will be easy!).</p>\n<p></p><div class=\"alert alert-primary\">The variable <code class=\"java\">word</code> stores a string.</div>",
+                "step_url": "https://hyperskill.org/learn/step/8213",
+                "code_template": "word = input()\n\n# Change the next line\nprint(...)",
+                "test_cases": [
+                    {
+                        "input": "maru",
+                        "output": "marumaru"
+                    }
+                ],
+                "wrong_code_submission": "word = input()\n\n# Change the next line\nprint(word)",
+                "default_feedback": "Failed test #1 of 8. Wrong answer\n\nThis is a sample test from the problem statement!\n\nTest input:\nmaru\nCorrect output:\nmarumaru\n\nYour code output:\nmaru\n",
+                "gpt_current_feedback": "1. Change the print statement to print the variable word concatenated with itself.\n2. Ensure there are no spaces or characters added between the repetitions of the word.\n3. Re-run the code and verify if the output matches the expected output \"marumaru\".\n4. Do not modify the input statement.",
+                "correct_code_submission": "word = input()\n\n# Change the next line\nprint(word*2)"
+            },
+            {
+                "topic_id": 404,
+                "topic_title": "Taking user's input",
+                "topic_theory_url": "https://hyperskill.org/learn/step/5913",
+                "step_id": 5918,
+                "step_title": "Sum",
+                "step_description": "<p></p><p>Write a program that reads three numbers from the input separately and prints the sum of three integer numbers. Don't specify any message in the input, please.</p><div class=\"alert alert-primary\"><p>Don't use specific numbers from the example, read them from the user.</p></div>",
+                "step_url": "https://hyperskill.org/learn/step/5918",
+                "code_template": "# put your python code here",
+                "test_cases": [
+                    {
+                        "input": "3\n6\n8",
+                        "output": "17"
+                    }
+                ],
+                "wrong_code_submission": "a = int(input)\nb = int(input)\nc = int(input)\nsum = a + b + c\nprint(sum)\n",
+                "default_feedback": "Failed test #1 of 11. Runtime error\n\nThis is a sample test from the problem statement!\n\nTest input:\n3\n6\n8\nCorrect output:\n17\n\nYour code output:\n\n\nError:\nTraceback (most recent call last):\n  File \"/sandbox/main.py\", line 1, in <module>\n    a = int(input)\n        ^^^^^^^^^^\nTypeError: int() argument must be a string, a bytes-like object or a real number, not 'builtin_function_or_method'\n",
+                "gpt_current_feedback": "1. Change all occurrences of \"input\" to \"input()\" to correctly call the input function.\n2. Ensure to enclose \"input()\" within parentheses to read user input as strings.\n3. Convert the user inputs to integers by passing them as arguments to the int() function.\n4. After converting all inputs to integers, calculate the sum of the three numbers.\n5. Finally, print the sum value to the output.",
+                "correct_code_submission": "# put your python code here\na = int(input())\nb = int(input())\nc = int(input())\nprint(a + b + c)\n"
+            },
+            {
+                "topic_id": 855,
+                "topic_title": "Search in a string",
+                "topic_theory_url": "https://hyperskill.org/learn/step/9558",
+                "step_id": 8832,
+                "step_title": "Substring",
+                "step_description": "<p></p>\n<p>Write a program that takes two strings, checks whether the first string contains the second one and prints the result of the membership test.</p>\n<p>The variables for both input strings have already been defined.</p>",
+                "step_url": "https://hyperskill.org/learn/step/8832",
+                "code_template": "a = input()\nb = input()\n# run the membership test below",
+                "test_cases": [
+                    {
+                        "input": "Big Brother watches you\nFather",
+                        "output": "False"
+                    }
+                ],
+                "wrong_code_submission": "a = input()\nb = input()\n# run the membership test below\n\nprint(a in b)",
+                "default_feedback": "Failed test #2 of 3. Wrong answer\n",
+                "gpt_current_feedback": "1. Check if the first string is in the second string using the \"in\" keyword.\n2. Make sure you are using the correct order of variables in the membership test.\n3. Ensure that the output correctly reflects the membership test result.",
+                "correct_code_submission": "a = input()\nb = input()\n# run the membership test below\nprint(b in a)\n"
+            }
+        ]
+    },
+    "java": {
+        "code_problems": []
+    }
+}
