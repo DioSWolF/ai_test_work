@@ -1,6 +1,6 @@
 from typing import TypeVar, Type
 from copy import deepcopy
-from chatgpt_connevtor import ChatGPT
+from chatgpt_connector import ChatGPT
 from file_readers import JsonIO
 
 from json_parse import ChatGPTPrompts, CodeReviewResponse, FieldsCfg, TaskInfo
