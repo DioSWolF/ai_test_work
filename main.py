@@ -32,7 +32,11 @@ class StartProgram:
         Start the program.
         """
         await self._review()
+        print("\nREVIEW RESPONSE:\n")
+        self._print_responses(self.review_response)
         await self._friendly()
+        print("\nFRIENDLY RESPONSE:\n")
+        self._print_responses(self.friendly_response)
 
     async def _review(self):
         """
@@ -52,7 +56,6 @@ class StartProgram:
             self.chatgpt,
             self.json_io,
         )
-        print(f"REVIEW RESPONSE: \n{self.review_response}\n\n")
 
     async def _friendly(self):
         """
@@ -70,7 +73,11 @@ class StartProgram:
             self.chatgpt,
             self.json_io,
         )
-        print(f"FRIENDLY RESPONSE: \n{self.friendly_response}\n\n")
+
+    def _print_responses(self, resp_list: list[CodeReviewResponse]):
+        print(f"REVIEW RESPONSE: \n")
+        for resp in resp_list:
+            print(str(resp))
 
 
 if __name__ == "__main__":
