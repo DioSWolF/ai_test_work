@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 Pipfile
 Pipfile.lock
+for_test.py
