@@ -79,3 +79,6 @@ class CodeReviewResponse:
     step_id: int
     errors: list[str]
     recommendations: list[str]
+
+    def __str__(self) -> str:
+        return f'{{\n"topic_id": {self.topic_id},\n"step_id": {self.step_id},\n"errors": {self.errors},\n"recommendations": {self.recommendations},\n}}'
