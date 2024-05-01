@@ -75,7 +75,6 @@ class StartProgram:
         )
 
     def _print_responses(self, resp_list: list[CodeReviewResponse]):
-        print(f"REVIEW RESPONSE: \n")
         for resp in resp_list:
             print(str(resp))
 
