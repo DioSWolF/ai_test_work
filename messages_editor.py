@@ -1,45 +1,52 @@
 from typing import TypeVar, Type
 from copy import deepcopy
+from openai.types.chat.chat_completion import ChatCompletion
+
 from chatgpt_connector import ChatGPT
 from file_readers import JsonIO
-
-from json_parse import ChatGPTPrompts, CodeReviewResponse, FieldsCfg, TaskInfo
-
+from json_parse import (
+    CodeReviewResponse,
+    FieldsCfg,
+    FieldsPrompts,
+    TaskInfo,
+)
 
 class MessageEditor:
+    """
+    Class for editing and forming messages to be sent to ChatGPT.
+    """
     T = TypeVar("T")
 
-    def __init__(self, chatgpt_prompts: ChatGPTPrompts):
+    def __init__(self):
         """
-        Initializes the MessageEditor class.
-        :param chatgpt_prompts: ChatGPTPrompts object.
+        Initializes the class with a basic message template.
         """
         self.message_template = {"role": "user", "content": ""}
-        self.code_review_prompt_msg = [
+
+    def _create_prompt_template(self, chatgpt_prompts: FieldsPrompts) -> list[dict]:
+        """
+        Creates a prompt template for ChatGPT based on provided prompt settings.
+        
+        :param chatgpt_prompts: Prompt settings for ChatGPT.
+        :return: List of dictionaries with roles and content of messages.
+        """
+        prompt_msg = [
             {
                 "role": "system",
-                "content": f"{chatgpt_prompts.code_review.response_format}{chatgpt_prompts.code_review.response_example}",
+                "content": f"{chatgpt_prompts.response_format}{chatgpt_prompts.response_example}",
             },
-            {"role": "user", "content": f"{chatgpt_prompts.code_review.main_prompt}"},
+            {"role": "user", "content": f"{chatgpt_prompts.main_prompt}"},
         ]
-        self.friendly_prompt_msg = [
-            {
-                "role": "system",
-                "content": f"{chatgpt_prompts.code_review.response_format}",
-            },
-            {
-                "role": "user",
-                "content": f"{chatgpt_prompts.friendly_format.main_prompt}",
-            },
-        ]
+        return prompt_msg
 
     def _formation_tasks(
         self, task_objects: list[TaskInfo | CodeReviewResponse]
     ) -> list[str]:
         """
-        Forms a list of tasks.
+        Forms a list of tasks as strings based on a list of task objects.
+        
         :param task_objects: List of task objects.
-        :return: List of tasks as strings.
+        :return: List of strings representing tasks.
         """
         tasks_list = []
         i = 1
@@ -58,9 +65,10 @@ class MessageEditor:
 
     def _set_message_template(self, tasks_text: list[str]) -> list[dict]:
         """
-        Sets the message template.
-        :param tasks_text: List of tasks as strings.
-        :return: List of messages.
+        Sets the message template for each task from the list of tasks.
+        
+        :param tasks_text: List of task texts.
+        :return: List of dictionaries with message templates.
         """
         message_template = deepcopy(self.message_template)
         message_list = []
@@ -71,15 +79,33 @@ class MessageEditor:
 
         return message_list
 
+    def _ready_messages(
+        self, formated_tasks: list[str], prompts_msg: dict[str]
+    ) -> list[dict]:
+        """
+        Prepares messages for sending by adding tasks to the prompt template.
+        
+        :param formated_tasks: List of formatted tasks.
+        :param prompts_msg: Prompt message template.
+        :return: List of dictionaries with ready messages.
+        """
+        ready_tasks = []
+        for task in formated_tasks:
+            prompt_message = deepcopy(prompts_msg)
+            prompt_message["messages"].append(task)
+            ready_tasks.append(prompt_message)
+        return ready_tasks
+
     def _convert_response(
         self, resp_content: list[str], data_class: Type[T], json_io: JsonIO
     ) -> list[Type[T]]:
         """
-        Converts the response.
-        :param resp_content: List of responses as strings.
-        :param data_class: Data class.
-        :param json_io: JsonIO object.
-        :return: List of responses as data class objects.
+        Converts responses from JSON to data objects.
+        
+        :param resp_content: List of JSON response strings.
+        :param data_class: Data class for conversion.
+        :param json_io: JsonIO instance for handling JSON.
+        :return: List of data objects.
         """
         dataclasses_list = []
 
@@ -89,59 +115,54 @@ class MessageEditor:
 
         return dataclasses_list
 
-    def get_tasks_messages(self, tasks_list: list[Type[T]]) -> list[dict[str:str]]:
-        """
-        Gets messages for tasks.
-        :param tasks_list: List of tasks.
-        :return: List of messages for tasks.
-        """
-        tasks = self._formation_tasks(tasks_list)
-        formated_tasks = self._set_message_template(tasks)
-        return formated_tasks
-
-    def create_message_data(
-        self, message: list[dict], chatgpt_cfg: FieldsCfg
+    def create_cfg_message(
+        self, chatgpt_prompts: FieldsPrompts, chatgpt_cfg: FieldsCfg
     ) -> dict[str:any]:
         """
-        Creates data for the message.
-        :param message: List of messages.
-        :param chatgpt_cfg: ChatGPT configuration.
-        :return: Data for the message.
+        Creates a configuration message for ChatGPT based on prompt settings and configuration.
+        
+        :param chatgpt_prompts: Prompt settings for ChatGPT.
+        :param chatgpt_cfg: Configuration for ChatGPT.
+        :return: Dictionary with message configuration.
         """
+        prompt_msg = self._create_prompt_template(chatgpt_prompts)
         messages = {
             "model": chatgpt_cfg.model,
             "temperature": chatgpt_cfg.temperature,
             "top_p": chatgpt_cfg.top_p,
             # "max_tokens": chatgpt_cfg.max_tokens,
             "response_format": chatgpt_cfg.response_format,
-            "messages": message,
+            "messages": prompt_msg,
         }
         return messages
 
-    async def request_response_chatgpt(
-        self,
-        formated_tasks: list[str],
-        prompts_msg: dict[str:str],
-        data_class: Type[T],
-        chatgpt: ChatGPT,
-        json_io: JsonIO,
-    ) -> list[Type[T]]:
+    def get_tasks_messages(
+        self, tasks_list: list[Type[T]], prompt_msg: dict[str:any]
+    ) -> dict[str]:
         """
-        Requests a response from ChatGPT.
-        :param formated_tasks: List of formatted tasks.
-        :param prompts_msg: Messages for tasks.
-        :param data_class: Data class.
-        :param chatgpt: ChatGPT object.
-        :param json_io: JsonIO object.
-        :return: List of responses as data class objects.
+        Gets messages for tasks based on a list of task objects and a prompt template.
+        
+        :param tasks_list: List of task objects.
+        :param prompt_msg: Prompt message template.
+        :return: Dictionary with ready messages.
+        """
+        tasks = self._formation_tasks(tasks_list)
+        formated_tasks = self._set_message_template(tasks)
+        ready_messages = self._ready_messages(formated_tasks, prompt_msg)
+        return ready_messages
+
+    def parse_response(
+        self, response_tasks: list[ChatCompletion], data_class: Type[T], json_io: JsonIO
+    ):
+        """
+        Parses responses from ChatGPT and converts them into data objects.
+        
+        :param response_tasks: List of ChatCompletion responses.
+        :param data_class: Data class for conversion.
+        :param json_io: JsonIO instance for handling JSON.
+        :return: List of data objects.
         """
         resp_content = []
-
-        for task in formated_tasks:
-            prompt_message = deepcopy(prompts_msg)
-            prompt_message["messages"].append(task)
-
-            resp_tasks = await chatgpt.send_request(prompt_message)
+        for resp_tasks in response_tasks:
             resp_content.append(resp_tasks.choices[0].message.content)
-
         return self._convert_response(resp_content, data_class, json_io)

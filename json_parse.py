@@ -53,23 +53,19 @@ class ChatGPTCfg:
 
 
 # TODO: ChatGPT prompts
+
+
 @dataclass
-class CodeReviewPrompt:
+class FieldsPrompts:
     main_prompt: str
     response_format: str
     response_example: str
 
 
 @dataclass
-class FriendlyPrompt:
-    main_prompt: str
-    response_example: str
-
-
-@dataclass
 class ChatGPTPrompts:
-    code_review: CodeReviewPrompt
-    friendly_format: FriendlyPrompt
+    code_review: FieldsPrompts
+    code_friendly: FieldsPrompts
 
 
 # TODO: ChatGPT response

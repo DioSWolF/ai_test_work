@@ -24,55 +24,56 @@ class StartProgram:
         self.python_code = self.json_io.get_json_data(
             self.env_reader.python_tasks_path, PythonCode
         )
-        self.msg_editor = MessageEditor(self.chatgpt_prompts)
+        self.msg_editor = MessageEditor()
         self.chatgpt = ChatGPT(self.env_reader.chatgpt_api_key)
 
-    async def start(self):
+    def start(self): # async def start(self)
         """
         Start the program.
         """
-        await self._review()
+        self._review()
         print("\nREVIEW RESPONSE:\n")
         self._print_responses(self.review_response)
-        await self._friendly()
+        self._friendly()
         print("\nFRIENDLY RESPONSE:\n")
         self._print_responses(self.friendly_response)
 
-    async def _review(self):
+    def _review(self):
         """
         Review the code.
         """
-        self.review_prompt = self.msg_editor.create_message_data(
-            self.msg_editor.code_review_prompt_msg,
+        # self.chatgpt_prompts
+        self.review_cfg_prompt = self.msg_editor.create_cfg_message(
+            self.chatgpt_prompts.code_review,
             chatgpt_cfg=self.chatgpt_cfg.code_review,
         )
         self.review_tasks = self.msg_editor.get_tasks_messages(
-            self.python_code.python.code_problems
+            self.python_code.python.code_problems, 
+            self.review_cfg_prompt,
         )
-        self.review_response = await self.msg_editor.request_response_chatgpt(
-            self.review_tasks,
-            self.review_prompt,
-            CodeReviewResponse,
-            self.chatgpt,
-            self.json_io,
-        )
+        self.response = asyncio.run(self.chatgpt.async_request_response_chatgpt(
+            self.review_tasks
+        ))
 
-    async def _friendly(self):
+        self.review_response = self.msg_editor.parse_response(self.response, CodeReviewResponse, self.json_io)
+
+    def _friendly(self):
         """
         Make the code friendly.
         """
-        self.friendly_prompt = self.msg_editor.create_message_data(
-            self.msg_editor.friendly_prompt_msg,
+
+        self.friendly_cfg_prompt = self.msg_editor.create_cfg_message(
+            self.chatgpt_prompts.code_friendly,
             chatgpt_cfg=self.chatgpt_cfg.code_friendly,
         )
-        self.friendly_tasks = self.msg_editor.get_tasks_messages(self.review_response)
-        self.friendly_response = await self.msg_editor.request_response_chatgpt(
-            self.friendly_tasks,
-            self.friendly_prompt,
-            CodeReviewResponse,
-            self.chatgpt,
-            self.json_io,
+        self.friendly_tasks = self.msg_editor.get_tasks_messages(
+            self.review_response, 
+            self.friendly_cfg_prompt,
         )
+        self.response = asyncio.run(self.chatgpt.async_request_response_chatgpt(
+            self.friendly_tasks
+        ))
+        self.friendly_response = self.msg_editor.parse_response(self.response, CodeReviewResponse, self.json_io)
 
     def _print_responses(self, resp_list: list[CodeReviewResponse]):
         for resp in resp_list:
@@ -81,4 +82,5 @@ class StartProgram:
 
 if __name__ == "__main__":
     a = StartProgram()
-    asyncio.run(a.start())
+    a.start()
+
