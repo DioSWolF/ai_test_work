@@ -96,25 +96,6 @@ class MessageEditor:
             ready_tasks.append(prompt_message)
         return ready_tasks
 
-    def _convert_response(
-        self, resp_content: list[str], data_class: Type[T], json_io: JsonIO
-    ) -> list[Type[T]]:
-        """
-        Converts responses from JSON to data objects.
-        
-        :param resp_content: List of JSON response strings.
-        :param data_class: Data class for conversion.
-        :param json_io: JsonIO instance for handling JSON.
-        :return: List of data objects.
-        """
-        dataclasses_list = []
-
-        for json_resp in resp_content:
-            new_resp = json_io.json_to_dataclass(str(json_resp), data_class)
-            dataclasses_list.append(new_resp)
-
-        return dataclasses_list
-
     def create_cfg_message(
         self, chatgpt_prompts: FieldsPrompts, chatgpt_cfg: FieldsCfg
     ) -> dict[str:any]:
@@ -153,7 +134,7 @@ class MessageEditor:
 
     def parse_response(
         self, response_tasks: list[ChatCompletion], data_class: Type[T], json_io: JsonIO
-    ):
+    ) -> Type[T]:
         """
         Parses responses from ChatGPT and converts them into data objects.
         
@@ -164,5 +145,6 @@ class MessageEditor:
         """
         resp_content = []
         for resp_tasks in response_tasks:
-            resp_content.append(resp_tasks.choices[0].message.content)
-        return self._convert_response(resp_content, data_class, json_io)
+            new_resp = json_io.json_to_dataclass(str(resp_tasks), data_class)
+            resp_content.append(new_resp)
+        return resp_content
