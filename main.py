@@ -27,18 +27,19 @@ class StartProgram:
         self.msg_editor = MessageEditor()
         self.chatgpt = ChatGPT(self.env_reader.chatgpt_api_key)
 
-    def start(self):
-        """
-        Start the program.
-        """
-        self._review()
-        print("\nREVIEW RESPONSE:\n")
-        self._print_responses(self.review_response)
-        self._friendly()
-        print("\nFRIENDLY RESPONSE:\n")
-        self._print_responses(self.friendly_response)
+    # def start(self):                                                                          #TODO:        Use in vscode, pycharm, etc.
+    #     """
+    #     Start the program.
+    #     """
+        # self.review()
+        # print("\nREVIEW RESPONSE:\n")
+        # self._print_responses(self.review_response)
+        # self.friendly()
+        # print("\nFRIENDLY RESPONSE:\n")
+        # self._print_responses(self.friendly_response)
 
-    def _review(self):
+    async def review(self):                                                                     #TODO:        Use in google notebook, jupiter notebook.
+        # def review(self):                                                                     #TODO:        Use in vscode, pycharm, etc.
         """
         Review the code.
         """
@@ -50,17 +51,20 @@ class StartProgram:
             self.python_code.python.code_problems,
             self.review_cfg_prompt,
         )
-        self.response = asyncio.run(
-            self.chatgpt.async_request_response_chatgpt(self.review_tasks)
-        )
+        self.response = await self.chatgpt.async_request_response_chatgpt(self.review_tasks)    #TODO:        Use in google notebook, jupiter notebook.
 
+        # self.response = asyncio.run(
+        #     self.chatgpt.async_request_response_chatgpt(self.review_tasks)                    #TODO:        Use in vscode, pycharm, etc.
+        #     )
+        
         self.review_response = self.msg_editor.parse_response(
             self.response, CodeReviewResponse, self.json_io
         )
 
-    def _friendly(self):
+    async def friendly(self):                                                                   #TODO:        Use in google notebook, jupiter notebook.
+        # def friendly(self):                                                                   #TODO:        Use in vscode, pycharm, etc.
         """
-        Make the code friendly.
+        Make the review response friendly.
         """
 
         self.friendly_cfg_prompt = self.msg_editor.create_cfg_message(
@@ -71,9 +75,11 @@ class StartProgram:
             self.review_response,
             self.friendly_cfg_prompt,
         )
-        self.response = asyncio.run(
-            self.chatgpt.async_request_response_chatgpt(self.friendly_tasks)
-        )
+        self.response = await self.chatgpt.async_request_response_chatgpt(self.friendly_tasks)  #TODO:        Use in google notebook, jupiter notebook.
+        
+        # self.response = asyncio.run(
+        #     self.chatgpt.async_request_response_chatgpt(self.friendly_tasks)                  #TODO:        Use in vscode, pycharm, etc.
+        # )
         self.friendly_response = self.msg_editor.parse_response(
             self.response, CodeReviewResponse, self.json_io
         )
@@ -83,6 +89,6 @@ class StartProgram:
             print(str(resp))
 
 
-if __name__ == "__main__":
-    a = StartProgram()
-    a.start()
+# if __name__ == "__main__":                                                                    #TODO:        Use in vscode, pycharm, etc.
+#     a = StartProgram()
+#     a.start()
