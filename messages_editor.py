@@ -11,10 +11,12 @@ from json_parse import (
     TaskInfo,
 )
 
+
 class MessageEditor:
     """
     Class for editing and forming messages to be sent to ChatGPT.
     """
+
     T = TypeVar("T")
 
     def __init__(self):
@@ -26,7 +28,7 @@ class MessageEditor:
     def _create_prompt_template(self, chatgpt_prompts: FieldsPrompts) -> list[dict]:
         """
         Creates a prompt template for ChatGPT based on provided prompt settings.
-        
+
         :param chatgpt_prompts: Prompt settings for ChatGPT.
         :return: List of dictionaries with roles and content of messages.
         """
@@ -39,12 +41,10 @@ class MessageEditor:
         ]
         return prompt_msg
 
-    def _formation_tasks(
-        self, task_object: TaskInfo | CodeReviewResponse
-    ) -> str:
+    def _formation_tasks(self, task_object: TaskInfo | CodeReviewResponse) -> str:
         """
         Forms a list of tasks as strings based on a list of task objects.
-        
+
         :param task_objects: Task objects.
         :return: String representing task.
         """
@@ -58,21 +58,19 @@ class MessageEditor:
     def _set_message_template(self, task_text: str) -> dict:
         """
         Sets the message template for each task from the list of tasks.
-        
+
         :param tasks_text: List of task texts.
         :return: Dictionary with message template.
         """
         message_template = deepcopy(self.message_template)
         message_template["content"] = task_text
- 
+
         return message_template
 
-    def _ready_messages(
-        self, formated_task: str, prompts_msg: dict[str]
-    ) -> dict:
+    def _ready_messages(self, formated_task: str, prompts_msg: dict[str]) -> dict:
         """
         Prepares messages for sending by adding tasks to the prompt template.
-        
+
         :param formated_tasks: List of formatted tasks.
         :param prompts_msg: Prompt message template.
         :return: Dictionary with ready message.
@@ -87,7 +85,7 @@ class MessageEditor:
     ) -> dict[str:any]:
         """
         Creates a configuration message for ChatGPT based on prompt settings and configuration.
-        
+
         :param chatgpt_prompts: Prompt settings for ChatGPT.
         :param chatgpt_cfg: Configuration for ChatGPT.
         :return: Dictionary with message configuration.
@@ -108,7 +106,7 @@ class MessageEditor:
     ) -> dict[str]:
         """
         Gets messages for tasks based on a list of task objects and a prompt template.
-        
+
         :param tasks_list: List of task objects.
         :param prompt_msg: Prompt message template.
         :return: Dictionary with ready messages.
@@ -126,7 +124,7 @@ class MessageEditor:
     ) -> Type[T]:
         """
         Parses responses from ChatGPT and converts them into data objects.
-        
+
         :param response_tasks: List of ChatCompletion responses.
         :param data_class: Data class for conversion.
         :param json_io: JsonIO instance for handling JSON.
@@ -134,9 +132,7 @@ class MessageEditor:
         """
         resp_contents = []
         for resp_task in response_tasks:
-                resp_content = resp_task.choices[0].message.content
-                new_resp = json_io.json_to_dataclass(str(resp_content), data_class)
-                resp_contents.append(new_resp)
+            resp_content = resp_task.choices[0].message.content
+            new_resp = json_io.json_to_dataclass(str(resp_content), data_class)
+            resp_contents.append(new_resp)
         return resp_contents
-
-

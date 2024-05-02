@@ -11,7 +11,7 @@ class ChatGPT:
     def __init__(self, api_key: str) -> None:
         """
         Initializes the class using an API key.
-        
+
         :param api_key: API key for accessing AsyncOpenAI/OpenAI.
         """
         self.openai = AsyncOpenAI(api_key=api_key)
@@ -19,7 +19,7 @@ class ChatGPT:
     async def send_request(self, request_data: dict) -> ChatCompletion:
         """
         Sends a request to the OpenAI ChatGPT API.
-        
+
         :param request_data: Request data in dictionary format.
         :return: Response from the API as a ChatCompletion object.
         """
@@ -32,7 +32,7 @@ class ChatGPT:
     ) -> list[any]:
         """
         Asynchronously sends a list of requests to the API and returns the responses.
-        
+
         :param ready_tasks: List of tasks in the form of a list of dictionaries.
         :return: List of responses from the API.
         """
