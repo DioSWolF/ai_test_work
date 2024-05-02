@@ -40,30 +40,30 @@ class MessageEditor:
         return prompt_msg
 
     def _formation_tasks(
-        self, task_objects: list[TaskInfo | CodeReviewResponse]
-    ) -> list[str]:
+        self, task_object: TaskInfo | CodeReviewResponse
+    ) -> str:
         """
         Forms a list of tasks as strings based on a list of task objects.
         
-        :param task_objects: List of task objects.
+        :param task_objects: Task objects.
         :return: List of strings representing tasks.
         """
-        tasks_list = []
-        i = 1
+        # tasks_list = []
+        # i = 1
 
-        for task in task_objects:
-            message_task = f"Task {i}:"
+        # for task in task_objects:
+        message_task = f"Task:"
 
-            for field, value in task.__dict__.items():
-                message_task += f"\n\n{field}: {value},\n\n"
+        for field, value in task_object.__dict__.items():
+            message_task += f"\n\n{field}: {value},\n\n"
 
-            tasks_list.append(message_task)
-            message_task = ""
-            i += 1
+            # tasks_list.append(message_task)
+            # message_task = ""
+            # i += 1
 
-        return tasks_list
+        return message_task
 
-    def _set_message_template(self, tasks_text: list[str]) -> list[dict]:
+    def _set_message_template(self, task_text: str) -> dict:
         """
         Sets the message template for each task from the list of tasks.
         
@@ -71,16 +71,16 @@ class MessageEditor:
         :return: List of dictionaries with message templates.
         """
         message_template = deepcopy(self.message_template)
-        message_list = []
+        # message_list = []
 
-        for task_text in tasks_text:
-            message_template["content"] = task_text
-            message_list.append(message_template.copy())
+        # for task_text in tasks_text:
+        message_template["content"] = task_text
+        # message_list.append(message_template.copy())
 
-        return message_list
+        return message_template
 
     def _ready_messages(
-        self, formated_tasks: list[str], prompts_msg: dict[str]
+        self, formated_task: str, prompts_msg: dict[str]
     ) -> list[dict]:
         """
         Prepares messages for sending by adding tasks to the prompt template.
@@ -89,12 +89,12 @@ class MessageEditor:
         :param prompts_msg: Prompt message template.
         :return: List of dictionaries with ready messages.
         """
-        ready_tasks = []
-        for task in formated_tasks:
-            prompt_message = deepcopy(prompts_msg)
-            prompt_message["messages"].append(task)
-            ready_tasks.append(prompt_message)
-        return ready_tasks
+        # ready_tasks = []
+        # for task in formated_tasks:
+        prompt_message = deepcopy(prompts_msg)
+        prompt_message["messages"].append(formated_task)
+            # ready_tasks.append(prompt_message)
+        return prompt_message
 
     def create_cfg_message(
         self, chatgpt_prompts: FieldsPrompts, chatgpt_cfg: FieldsCfg
@@ -127,10 +127,13 @@ class MessageEditor:
         :param prompt_msg: Prompt message template.
         :return: Dictionary with ready messages.
         """
-        tasks = self._formation_tasks(tasks_list)
-        formated_tasks = self._set_message_template(tasks)
-        ready_messages = self._ready_messages(formated_tasks, prompt_msg)
-        return ready_messages
+        messages_list = []
+        for task in tasks_list:
+            formated_tasks = self._formation_tasks(task)
+            task_template = self._set_message_template(formated_tasks)
+            ready_message = self._ready_messages(task_template, prompt_msg)
+            messages_list.append(ready_message)
+        return messages_list
 
     def parse_response(
         self, response_tasks: list[ChatCompletion], data_class: Type[T], json_io: JsonIO
@@ -143,8 +146,11 @@ class MessageEditor:
         :param json_io: JsonIO instance for handling JSON.
         :return: List of data objects.
         """
-        resp_content = []
-        for resp_tasks in response_tasks:
-            new_resp = json_io.json_to_dataclass(str(resp_tasks), data_class)
-            resp_content.append(new_resp)
-        return resp_content
+        resp_contents = []
+        for resp_task in response_tasks:
+                resp_content = resp_task.choices[0].message.content
+                new_resp = json_io.json_to_dataclass(str(resp_content), data_class)
+                resp_contents.append(new_resp)
+        return resp_contents
+
+
