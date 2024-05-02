@@ -27,7 +27,7 @@ class StartProgram:
         self.msg_editor = MessageEditor()
         self.chatgpt = ChatGPT(self.env_reader.chatgpt_api_key)
 
-    def start(self): # async def start(self)
+    def start(self):
         """
         Start the program.
         """
@@ -42,7 +42,6 @@ class StartProgram:
         """
         Review the code.
         """
-        # self.chatgpt_prompts
         self.review_cfg_prompt = self.msg_editor.create_cfg_message(
             self.chatgpt_prompts.code_review,
             chatgpt_cfg=self.chatgpt_cfg.code_review,
