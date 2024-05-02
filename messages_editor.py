@@ -46,20 +46,12 @@ class MessageEditor:
         Forms a list of tasks as strings based on a list of task objects.
         
         :param task_objects: Task objects.
-        :return: List of strings representing tasks.
+        :return: String representing task.
         """
-        # tasks_list = []
-        # i = 1
-
-        # for task in task_objects:
         message_task = f"Task:"
 
         for field, value in task_object.__dict__.items():
             message_task += f"\n\n{field}: {value},\n\n"
-
-            # tasks_list.append(message_task)
-            # message_task = ""
-            # i += 1
 
         return message_task
 
@@ -68,32 +60,26 @@ class MessageEditor:
         Sets the message template for each task from the list of tasks.
         
         :param tasks_text: List of task texts.
-        :return: List of dictionaries with message templates.
+        :return: Dictionary with message template.
         """
         message_template = deepcopy(self.message_template)
-        # message_list = []
-
-        # for task_text in tasks_text:
         message_template["content"] = task_text
-        # message_list.append(message_template.copy())
-
+ 
         return message_template
 
     def _ready_messages(
         self, formated_task: str, prompts_msg: dict[str]
-    ) -> list[dict]:
+    ) -> dict:
         """
         Prepares messages for sending by adding tasks to the prompt template.
         
         :param formated_tasks: List of formatted tasks.
         :param prompts_msg: Prompt message template.
-        :return: List of dictionaries with ready messages.
+        :return: Dictionary with ready message.
         """
-        # ready_tasks = []
-        # for task in formated_tasks:
         prompt_message = deepcopy(prompts_msg)
         prompt_message["messages"].append(formated_task)
-            # ready_tasks.append(prompt_message)
+
         return prompt_message
 
     def create_cfg_message(
